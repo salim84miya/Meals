@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:theme="@style/Base.Theme.Meals"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activites.MealActivity">
+
+   <com.google.android.material.appbar.AppBarLayout
+       android:id="@+id/appBar"
+       android:layout_width="match_parent"
+       android:layout_height="230dp"
+       android:background="@color/primary">
+
+       <com.google.android.material.appbar.CollapsingToolbarLayout
+           android:id="@+id/collapsable_toolbar"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           app:contentScrim="@color/accent"
+           app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
+           app:title="Meal Name">
+
+        <ImageView
+            android:id="@+id/detail_page_meal_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:layout_collapseMode="parallax"/>
+
+           <Toolbar
+               android:layout_width="wrap_content"
+               android:layout_height="?actionBarSize"
+               app:layout_collapseMode="pin" />
+       </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+   </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/favourite_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/favorite_icon"
+        app:layout_anchor="@id/appBar"
+        app:layout_anchorGravity="bottom|end"
+        android:layout_marginEnd="10dp"
+        app:backgroundTint="@color/accent"
+        app:tint="@color/white"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/meal_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Category:Beef"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:textColor="@color/g_black"
+                    android:textSize="16sp"
+                    android:drawableStart="@drawable/category_icon"
+                    android:drawableTint="@color/g_black"/>
+
+                <TextView
+                    android:id="@+id/meal_cousine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cousine:Chinese"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:textColor="@color/g_black"
+                    android:textSize="16sp"
+                    android:drawableStart="@drawable/location_icon"
+                    android:drawableTint="@color/g_black"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_instruction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:fontFamily="@font/myfont"
+                app:layout_constraintTop_toBottomOf="@+id/linear_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="7dp"
+                android:layout_marginStart="5dp"
+                android:text="-Instructions :"/>
+
+            <TextView
+                android:id="@+id/tv_meal_instructions"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:layout_marginEnd="5dp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_instruction"
+                app:layout_constraintStart_toStartOf="@id/tv_instruction"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="2dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <ImageView
+        android:id="@+id/img_youtube"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/youtube_icon"/>
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/appBar"
+        android:visibility="invisible"
+        app:layout_anchorGravity="bottom"/>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
