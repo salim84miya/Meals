@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.meals.pojo.Categories
 import com.example.meals.pojo.Meal
 import com.example.meals.retrofit.MealApi
 import kotlinx.coroutines.Dispatchers
@@ -27,5 +28,20 @@ class HomeViewModel(private val retrofitInstance: MealApi) : ViewModel() {
             }
         }
 
+    }
+
+    private var popularMeal = MutableLiveData<List<Categories>>()
+    val popularMealData:LiveData<List<Categories>> = popularMeal
+
+    fun getPopularMeals(categories: String){
+
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = retrofitInstance.getMealsByCategory(categories)
+            if(result.body()!=null){
+                popularMeal.postValue(result.body()!!.meals)
+            }else{
+                Log.d("Popular Meal Response result",result.message())
+            }
+        }
     }
 }
