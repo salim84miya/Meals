@@ -1,5 +1,6 @@
 package com.example.meals.fragments
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,12 +9,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.meals.activites.CategoryMealsActivity
+import com.example.meals.activites.MainActivity
 import com.example.meals.activites.MealActivity
+import com.example.meals.adapters.MealsCategoryAdapter
 import com.example.meals.adapters.OverPopularItemAdapter
 import com.example.meals.databinding.FragmentHomeBinding
-import com.example.meals.pojo.Categories
+import com.example.meals.pojo.Category
+import com.example.meals.pojo.MealsByCategory
 import com.example.meals.pojo.Meal
 import com.example.meals.retrofit.MealApi
 import com.example.meals.retrofit.RetrofitInstance
@@ -23,13 +29,15 @@ import com.example.meals.viewmodel.HomeViewModelFactory
 class HomeFragment : Fragment() {
         private lateinit var binding: FragmentHomeBinding
         private lateinit var homeViewModel:HomeViewModel
-        private lateinit var randomMeal: Meal
+        private lateinit var Meal: Meal
         private lateinit var overPopularItemAdapter: OverPopularItemAdapter
+        private lateinit var mealsCategoryAdapter:MealsCategoryAdapter
 
         companion object{
-            val mealId:String = "com.example.meals.fragments.mealId"
-            val mealName:String = "com.example.meals.fragments.mealName"
-            val mealThumb:String = "com.example.meals.fragments.mealThumb"
+            val mealId:String = "com.example.Meals.fragments.mealId"
+            val mealName:String = "com.example.Meals.fragments.mealName"
+            val mealThumb:String = "com.example.Meals.fragments.mealThumb"
+            val mealCategory:String = "com.example.Meals.fragments.mealCategory"
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,9 +45,10 @@ class HomeFragment : Fragment() {
 
         val retrofitInstance =RetrofitInstance.getInstance().create(MealApi::class.java)
 
-        homeViewModel = ViewModelProvider(this@HomeFragment,HomeViewModelFactory(retrofitInstance))[HomeViewModel::class.java]
+        homeViewModel = (activity as MainActivity).viewModel
 
         overPopularItemAdapter = OverPopularItemAdapter()
+        mealsCategoryAdapter = MealsCategoryAdapter()
     }
 
     override fun onCreateView(
@@ -64,11 +73,35 @@ class HomeFragment : Fragment() {
 
         homeViewModel.getPopularMeals("Seafood")
         gettingDataForPopularItem()
-
         settingClickOnPopularMeals()
 
+        homeViewModel.getAllMealCategories()
+        gettingDataForAllMealCategories()
+        settingRecyclerViewForAllCategories()
+        settingClickOnCategories()
 
+    }
 
+    private fun settingClickOnCategories() {
+        mealsCategoryAdapter.onItemClick = {
+            val intent = Intent(requireActivity(),CategoryMealsActivity::class.java)
+            intent.putExtra(mealCategory,it.strCategory)
+            startActivity(intent)
+        }
+
+    }
+
+    private fun settingRecyclerViewForAllCategories() {
+        binding.recyclerView.apply {
+            adapter = mealsCategoryAdapter
+            layoutManager = GridLayoutManager(context,3,GridLayoutManager.HORIZONTAL,false)
+        }
+    }
+
+    private fun gettingDataForAllMealCategories() {
+        homeViewModel.mealCategories.observe(viewLifecycleOwner, Observer {
+            mealsCategoryAdapter.setData(it as ArrayList<Category>)
+        })
     }
 
     private fun settingClickOnPopularMeals() {
@@ -83,7 +116,7 @@ class HomeFragment : Fragment() {
 
     private fun gettingDataForPopularItem() {
         homeViewModel.popularMealData.observe(viewLifecycleOwner, Observer {
-            overPopularItemAdapter.setData(popularItemList = it as ArrayList<Categories>)
+            overPopularItemAdapter.setData(popularItemList = it as ArrayList<MealsByCategory>)
         })
     }
 
@@ -97,9 +130,9 @@ class HomeFragment : Fragment() {
     private fun startRandomMealDetailActivity() {
         binding.imgRandomMeal.setOnClickListener {
             val intent = Intent(requireActivity(),MealActivity::class.java)
-            intent.putExtra(mealId,randomMeal.idMeal)
-            intent.putExtra(mealName,randomMeal.strMeal)
-            intent.putExtra(mealThumb,randomMeal.strMealThumb)
+            intent.putExtra(mealId,Meal.idMeal)
+            intent.putExtra(mealName,Meal.strMeal)
+            intent.putExtra(mealThumb,Meal.strMealThumb)
             startActivity(intent)
         }
     }
@@ -107,7 +140,7 @@ class HomeFragment : Fragment() {
     private fun observeRandomMealData(){
         homeViewModel.mealsData.observe(viewLifecycleOwner, Observer {
             Glide.with(requireActivity()).load(it.strMealThumb).into(binding.imgRandomMeal)
-            this.randomMeal = it
+            this.Meal = it
         })
     }
 }

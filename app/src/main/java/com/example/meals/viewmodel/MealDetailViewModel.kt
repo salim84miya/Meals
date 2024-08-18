@@ -5,12 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.meals.db.MealDao
 import com.example.meals.pojo.Meal
 import com.example.meals.retrofit.MealApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MealDetailViewModel(private val retrofitApi:MealApi):ViewModel() {
+class MealDetailViewModel(private val retrofitApi:MealApi,private val mealDao: MealDao):ViewModel() {
 
     private var mealData = MutableLiveData<Meal>()
     val meal:LiveData<Meal> = mealData
@@ -26,4 +27,14 @@ class MealDetailViewModel(private val retrofitApi:MealApi):ViewModel() {
             }
         }
     }
+
+    fun addFavouriteMeal(meal:Meal){
+
+        viewModelScope.launch(Dispatchers.IO) {
+            mealDao.insert(meal)
+        }
+    }
+
+
+
 }

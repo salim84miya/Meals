@@ -5,14 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.meals.databinding.OverPopularItemViewBinding
-import com.example.meals.pojo.Categories
+import com.example.meals.pojo.MealsByCategory
 
 class OverPopularItemAdapter: RecyclerView.Adapter<OverPopularItemAdapter.OverPopularItemHolder>() {
 
-    lateinit var onItemOnclick:((Categories)->Unit)
-    private var popularItemList = ArrayList<Categories>()
+    lateinit var onItemOnclick:((MealsByCategory)->Unit)
+    private var popularItemList = ArrayList<MealsByCategory>()
 
-    fun setData(popularItemList:ArrayList<Categories>){
+    fun setData(popularItemList:ArrayList<MealsByCategory>){
             this.popularItemList = popularItemList
             notifyDataSetChanged()
     }

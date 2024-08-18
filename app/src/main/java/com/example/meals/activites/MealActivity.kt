@@ -10,7 +10,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.meals.R
 import com.example.meals.databinding.ActivityMealBinding
+import com.example.meals.db.MealDao
+import com.example.meals.db.MealDatabase
 import com.example.meals.fragments.HomeFragment
+import com.example.meals.pojo.Meal
 import com.example.meals.retrofit.MealApi
 import com.example.meals.retrofit.RetrofitInstance
 import com.example.meals.viewmodel.MealDetailViewModel
@@ -25,6 +28,8 @@ class MealActivity : AppCompatActivity() {
     private lateinit var mealYtLink:String
     private lateinit var binding: ActivityMealBinding
     private lateinit var mealDetailViewModel: MealDetailViewModel
+    private lateinit var database: MealDao
+    private lateinit var meal:Meal
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +38,9 @@ class MealActivity : AppCompatActivity() {
         binding = ActivityMealBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        database = MealDatabase.getDatabase(this).mealDao()
         val retrofitApi = RetrofitInstance.getInstance().create(MealApi::class.java)
-        mealDetailViewModel = ViewModelProvider(this, MealDetailViewModelFactory(retrofitApi))[MealDetailViewModel::class.java]
+        mealDetailViewModel = ViewModelProvider(this, MealDetailViewModelFactory(retrofitApi,database))[MealDetailViewModel::class.java]
 
         getDataFromIntent()
         setDataOfIntent()
@@ -43,6 +49,15 @@ class MealActivity : AppCompatActivity() {
         mealDetailViewModel.getMealDetails(mealId)
         setMealDetails()
         setYoutubeClicks()
+
+        favouriteItemClick()
+
+    }
+
+    private fun favouriteItemClick() {
+        binding.favouriteBtn.setOnClickListener {
+            mealDetailViewModel.addFavouriteMeal(meal)
+        }
     }
 
     private fun setYoutubeClicks() {
@@ -56,6 +71,8 @@ class MealActivity : AppCompatActivity() {
         mealDetailViewModel.meal.observe(this, Observer {
 
             dataReadyCase()
+
+            meal = it
 
             binding.tvMealInstructions.text = it.strInstructions
             binding.mealCategory.text = "Category :${it.strCategory}"

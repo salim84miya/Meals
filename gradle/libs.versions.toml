@@ -14,6 +14,7 @@ retrfoit = "2.11.0"
 glide="4.16.0"
 coroutine="1.7.3"
 lifecycle_version = "2.8.4"
+room = "2.6.1"
 
 
 [libraries]
@@ -34,6 +35,9 @@ androidx-coroutine-android={group="org.jetbrains.kotlinx",name="kotlinx-coroutin
 androidx-coroutine-core={group="org.jetbrains.kotlinx",name="kotlinx-coroutines-core",version.ref="coroutine"}
 androidx-viewmodel={group="androidx.lifecycle",name="lifecycle-viewmodel-ktx",version.ref="lifecycle_version"}
 androidx-livedata={group="androidx.lifecycle",name="lifecycle-livedata-ktx",version.ref="lifecycle_version"}
+androidx-room-runtime={group="androidx.room",name="room-runtime",version.ref="room"}
+androidx-room-compiler={group="androidx.room",name="room-compiler",version.ref="room"}
+androidx-room-corutine={group="androidx.room",name="room-ktx",version.ref="room"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

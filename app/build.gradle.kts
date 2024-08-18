@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("kotlin-kapt")
 }
 
 android {
@@ -57,4 +58,8 @@ dependencies {
     implementation(libs.androidx.coroutine.android)
     implementation(libs.androidx.viewmodel)
     implementation(libs.androidx.livedata)
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.corutine)
+
 }
