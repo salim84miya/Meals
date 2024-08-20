@@ -69,4 +69,31 @@ class HomeViewModel(private val retrofitInstance: MealApi,private val mealDao: M
 
         return  mealDao.getAllMeals()
     }
+
+    private var searchedMealListData = MutableLiveData<List<Meal>>()
+    val searchedMealList:LiveData<List<Meal>> = searchedMealListData
+    fun getMealByName(name:String){
+
+        viewModelScope.launch(Dispatchers.IO) {
+           val result = retrofitInstance.searchMeal(name)
+            if(result.body()!=null){
+                searchedMealListData.postValue(result.body()!!.meals)
+            }else{
+                Log.d("Search Fragment","Error fetching data for search fragment ${result.errorBody()}")
+            }
+        }
+    }
+
+    fun deleteFavouriteMeal(meal: Meal){
+        viewModelScope.launch(Dispatchers.IO) {
+            mealDao.delete(meal)
+        }
+    }
+
+    fun addFavouriteMeal(meal:Meal){
+
+        viewModelScope.launch(Dispatchers.IO) {
+            mealDao.insert(meal)
+        }
+    }
 }

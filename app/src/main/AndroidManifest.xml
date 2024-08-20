@@ -23,6 +23,7 @@
             android:name=".activites.MealActivity"
             android:exported="false" />
         <activity
+            android:theme="@style/Base.Theme.Meals"
             android:name=".activites.MainActivity"
             android:exported="true">
             <intent-filter>

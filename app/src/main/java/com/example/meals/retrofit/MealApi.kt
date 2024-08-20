@@ -1,6 +1,7 @@
 package com.example.meals.retrofit
 
 import com.example.meals.pojo.CategoryList
+import com.example.meals.pojo.Meal
 import com.example.meals.pojo.MealsByCategoryList
 import com.example.meals.pojo.RandomMealList
 import retrofit2.Response
@@ -20,5 +21,8 @@ interface MealApi {
 
    @GET("categories.php")
    suspend fun getMealCategories():Response<CategoryList>
+
+   @GET("search.php")
+   suspend fun searchMeal(@Query("s") name:String):Response<RandomMealList>
 
 }

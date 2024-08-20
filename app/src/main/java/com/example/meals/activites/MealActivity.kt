@@ -18,6 +18,7 @@ import com.example.meals.retrofit.MealApi
 import com.example.meals.retrofit.RetrofitInstance
 import com.example.meals.viewmodel.MealDetailViewModel
 import com.example.meals.viewmodel.MealDetailViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 
 
 class MealActivity : AppCompatActivity() {
@@ -48,15 +49,15 @@ class MealActivity : AppCompatActivity() {
         loadingCase()
         mealDetailViewModel.getMealDetails(mealId)
         setMealDetails()
-        setYoutubeClicks()
 
-        favouriteItemClick()
 
     }
 
     private fun favouriteItemClick() {
         binding.favouriteBtn.setOnClickListener {
             mealDetailViewModel.addFavouriteMeal(meal)
+
+            Snackbar.make(findViewById(R.id.main),"Meal added to favourite",Snackbar.LENGTH_SHORT).show()
         }
     }
 
@@ -79,7 +80,12 @@ class MealActivity : AppCompatActivity() {
             binding.mealCousine.text = "Cousine :${it.strArea}"
 
             mealYtLink = it.strYoutube
+
+            setYoutubeClicks()
+
+            favouriteItemClick()
         })
+
     }
 
     private fun setDataOfIntent() {

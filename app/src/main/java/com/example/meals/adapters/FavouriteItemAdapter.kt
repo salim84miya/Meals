@@ -12,6 +12,7 @@ import java.util.Objects
 
 class FavouriteItemAdapter:RecyclerView.Adapter<FavouriteItemAdapter.RowHolder>() {
 
+    lateinit var onItemClick:((Meal)->Unit)
     inner class RowHolder(val binding:CategoryMealsBinding):RecyclerView.ViewHolder(binding.root)
 
     private val diffUtil = object : DiffUtil.ItemCallback<Meal>(){
@@ -41,5 +42,9 @@ class FavouriteItemAdapter:RecyclerView.Adapter<FavouriteItemAdapter.RowHolder>(
 
         Glide.with(holder.itemView).load(meal.strMealThumb).into(holder.binding.imgCategoryMeal)
         holder.binding.tvCategoryMealName.text = meal.strMeal
+
+        holder.itemView.setOnClickListener {
+            onItemClick.invoke(meal)
+        }
     }
 }

@@ -139,6 +139,7 @@
         android:layout_height="wrap_content"
         app:layout_anchor="@id/appBar"
         android:visibility="invisible"
+        android:backgroundTint="@color/red"
         app:layout_anchorGravity="bottom"/>
 
 

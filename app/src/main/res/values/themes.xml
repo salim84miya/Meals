@@ -15,5 +15,9 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="progressBar">
+        <item name="colorAccent">@color/red</item>
+    </style>
+
     <style name="Theme.Meals" parent="Base.Theme.Meals" />
 </resources>
