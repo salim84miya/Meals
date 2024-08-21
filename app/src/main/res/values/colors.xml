@@ -11,4 +11,11 @@
     <color name="g_black">#33405f</color>
     <color name="g_loading">#fffafc</color>
     <color name="gray">#E4E2E3</color>
+
+    <color name="textColor">#FF000000</color>
+    <color name="textColorGBlack">#33405f</color>
+
+    <color name="bottomIcon">#FF000000</color>
+    <color name="bottomSheetTitle">#FF000000</color>
+    <color name="bottomSheet">#FFFFFFFF</color>
 </resources>

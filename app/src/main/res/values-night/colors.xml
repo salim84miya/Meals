@@ -7,10 +7,16 @@
     <color name="red">#F41E0F</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-<!--    <color name="black">#FF000000</color>-->
-    <color name="black">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="g_black">#33405f</color>
     <color name="g_loading">#fffafc</color>
     <color name="gray">#E4E2E3</color>
+
+    <color name="textColor">#FFFFFFFF</color>
+    <color name="textColorGBlack">#FFFFFFFF</color>
+
+    <color name="bottomIcon">#FFFFFFFF</color>
+    <color name="bottomSheetTitle">#FFFFFFFF</color>
+    <color name="bottomSheet">#FF000000</color>
 </resources>

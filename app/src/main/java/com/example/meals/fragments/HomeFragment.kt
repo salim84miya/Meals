@@ -76,6 +76,7 @@ class HomeFragment : BaseFragment() {
         settingRecyclerViewForPopularItem()
 
         homeViewModel.getRandomMeals()
+        binding.progressBar.visibility = View.VISIBLE
         observeRandomMealData()
         startRandomMealDetailActivity()
 
@@ -154,6 +155,7 @@ class HomeFragment : BaseFragment() {
 
     private fun observeRandomMealData(){
         homeViewModel.mealsData.observe(viewLifecycleOwner, Observer {
+            binding.progressBar.visibility = View.INVISIBLE
             Glide.with(requireActivity()).load(it.strMealThumb).into(binding.imgRandomMeal)
             this.Meal = it
         })

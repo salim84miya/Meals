@@ -23,7 +23,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:text="category name"
         android:textSize="15sp"
-        android:textColor="@color/black"
+        android:textColor="@color/textColor"
         android:fontFamily="@font/myfont"
         android:layout_marginTop="3dp"/>
     
