@@ -13,6 +13,7 @@ import com.example.meals.databinding.ActivityMealBinding
 import com.example.meals.db.MealDao
 import com.example.meals.db.MealDatabase
 import com.example.meals.fragments.HomeFragment
+import com.example.meals.network.BaseActivity
 import com.example.meals.pojo.Meal
 import com.example.meals.retrofit.MealApi
 import com.example.meals.retrofit.RetrofitInstance
@@ -21,7 +22,7 @@ import com.example.meals.viewmodel.MealDetailViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 
 
-class MealActivity : AppCompatActivity() {
+class MealActivity : BaseActivity(){
 
     private lateinit var mealId:String
     private lateinit var mealName:String
@@ -38,7 +39,10 @@ class MealActivity : AppCompatActivity() {
 
         binding = ActivityMealBinding.inflate(layoutInflater)
         setContentView(binding.root)
+    }
 
+    override fun onNetworkAvailable() {
+        super.onNetworkAvailable()
         database = MealDatabase.getDatabase(this).mealDao()
         val retrofitApi = RetrofitInstance.getInstance().create(MealApi::class.java)
         mealDetailViewModel = ViewModelProvider(this, MealDetailViewModelFactory(retrofitApi,database))[MealDetailViewModel::class.java]
@@ -49,8 +53,6 @@ class MealActivity : AppCompatActivity() {
         loadingCase()
         mealDetailViewModel.getMealDetails(mealId)
         setMealDetails()
-
-
     }
 
     private fun favouriteItemClick() {

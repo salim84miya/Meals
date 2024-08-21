@@ -17,11 +17,12 @@ import com.example.meals.activites.MainActivity
 import com.example.meals.activites.MealActivity
 import com.example.meals.adapters.FavouriteItemAdapter
 import com.example.meals.databinding.FragmentFavouriteBinding
+import com.example.meals.network.BaseFragment
 import com.example.meals.viewmodel.HomeViewModel
 import com.google.android.material.snackbar.Snackbar
 
 
-class FavouriteFragment : Fragment() {
+class FavouriteFragment : BaseFragment() {
 
     private lateinit var binding: FragmentFavouriteBinding
     private lateinit var favouriteItemAdapter: FavouriteItemAdapter
@@ -43,7 +44,10 @@ class FavouriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
 
+    override fun onNetworkAvailable() {
+        super.onNetworkAvailable()
         viewModel.getAllFavouriteMeal()
         prepareRecyclerView()
         settingDataToAdapter()

@@ -15,6 +15,7 @@ import com.example.meals.adapters.MealsByCategoryAdapter
 import com.example.meals.adapters.MealsCategoryAdapter
 import com.example.meals.databinding.ActivityCategoryMealsBinding
 import com.example.meals.fragments.HomeFragment
+import com.example.meals.network.BaseActivity
 import com.example.meals.pojo.Category
 import com.example.meals.pojo.Meal
 import com.example.meals.pojo.MealsByCategory
@@ -23,7 +24,7 @@ import com.example.meals.retrofit.RetrofitInstance
 import com.example.meals.viewmodel.MealsByCategoryViewModel
 import com.example.meals.viewmodel.MealsByCategoryViewModelFactory
 
-class CategoryMealsActivity : AppCompatActivity() {
+class CategoryMealsActivity : BaseActivity() {
 
     private lateinit var binding: ActivityCategoryMealsBinding
     private lateinit var mealsByCategoryAdapter: MealsByCategoryAdapter
@@ -35,6 +36,11 @@ class CategoryMealsActivity : AppCompatActivity() {
 //        enableEdgeToEdge()
         binding = ActivityCategoryMealsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+    }
+
+    override fun onNetworkAvailable() {
+        super.onNetworkAvailable()
 
         mealsByCategoryAdapter = MealsByCategoryAdapter()
 
@@ -49,8 +55,6 @@ class CategoryMealsActivity : AppCompatActivity() {
         gettingData()
         settingMealsCount()
         handlingClicks()
-
-
     }
 
     private fun handlingClicks() {

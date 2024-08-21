@@ -1,15 +1,18 @@
 package com.example.meals.viewmodel
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.meals.db.MealDao
+import com.example.meals.network.NetworkConnectivityCheck
 import com.example.meals.pojo.Category
 import com.example.meals.pojo.MealsByCategory
 import com.example.meals.pojo.Meal
 import com.example.meals.retrofit.MealApi
+import com.example.meals.utils.InternetConnectivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -96,4 +99,5 @@ class HomeViewModel(private val retrofitInstance: MealApi,private val mealDao: M
             mealDao.insert(meal)
         }
     }
+
 }

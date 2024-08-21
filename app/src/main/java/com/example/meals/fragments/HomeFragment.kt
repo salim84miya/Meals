@@ -20,15 +20,18 @@ import com.example.meals.activites.MealActivity
 import com.example.meals.adapters.MealsCategoryAdapter
 import com.example.meals.adapters.OverPopularItemAdapter
 import com.example.meals.databinding.FragmentHomeBinding
+import com.example.meals.network.BaseFragment
+import com.example.meals.network.NetworkConnectivityCheck
 import com.example.meals.pojo.Category
 import com.example.meals.pojo.MealsByCategory
 import com.example.meals.pojo.Meal
 import com.example.meals.retrofit.MealApi
 import com.example.meals.retrofit.RetrofitInstance
+import com.example.meals.utils.InternetConnectivity
 import com.example.meals.viewmodel.HomeViewModel
 import com.example.meals.viewmodel.HomeViewModelFactory
 
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment() {
         private lateinit var binding: FragmentHomeBinding
         private lateinit var homeViewModel:HomeViewModel
         private lateinit var Meal: Meal
@@ -45,12 +48,11 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val retrofitInstance =RetrofitInstance.getInstance().create(MealApi::class.java)
-
         homeViewModel = (activity as MainActivity).viewModel
 
         overPopularItemAdapter = OverPopularItemAdapter()
         mealsCategoryAdapter = MealsCategoryAdapter()
+
     }
 
     override fun onCreateView(
@@ -66,6 +68,10 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onNetworkAvailable() {
+        super.onNetworkAvailable()
 
         settingRecyclerViewForPopularItem()
 

@@ -1,23 +1,24 @@
 package com.example.meals.fragments
 
+import android.content.Context
 import android.content.Intent
+import android.hardware.input.InputManager
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.meals.R
 import com.example.meals.activites.MainActivity
 import com.example.meals.activites.MealActivity
 import com.example.meals.adapters.FavouriteItemAdapter
 import com.example.meals.databinding.FragmentSearchBinding
+import com.example.meals.network.BaseFragment
 import com.example.meals.viewmodel.HomeViewModel
 
 
-class SearchFragment : Fragment() {
+class SearchFragment : BaseFragment() {
 
     private lateinit var binding:FragmentSearchBinding
     private lateinit var searchItemAdapter:FavouriteItemAdapter
@@ -40,20 +41,31 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
 
+    override fun onNetworkAvailable() {
+        super.onNetworkAvailable()
         prepareRecyclerView()
         settingDataForRv()
         searchMeal()
         handlingClicks()
     }
 
+
+
     private fun searchMeal() {
         binding.imgSearchBtn.setOnClickListener {
+            hideKeyboard(it)
             val searchQuery = binding.searchBox.text.toString()
             if(searchQuery.isNotEmpty()){
                 viewModel.getMealByName(searchQuery.trim())
             }
         }
+    }
+
+    private fun hideKeyboard(view: View) {
+        val imm = context?.applicationContext?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     private fun handlingClicks() {

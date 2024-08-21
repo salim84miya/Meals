@@ -13,10 +13,11 @@ import com.example.meals.activites.CategoryMealsActivity
 import com.example.meals.activites.MainActivity
 import com.example.meals.adapters.MealsCategoryAdapter
 import com.example.meals.databinding.FragmentCategoriesBinding
+import com.example.meals.network.BaseFragment
 import com.example.meals.pojo.Category
 import com.example.meals.viewmodel.HomeViewModel
 
-class CategoriesFragment : Fragment() {
+class CategoriesFragment : BaseFragment() {
 
     private lateinit var binding:FragmentCategoriesBinding
     private lateinit var mealsCategoryAdapter: MealsCategoryAdapter
@@ -38,7 +39,10 @@ class CategoriesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
 
+    override fun onNetworkAvailable() {
+        super.onNetworkAvailable()
         prepareRecyclerView()
         viewModel.getAllMealCategories()
         settingData()

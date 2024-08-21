@@ -3,14 +3,19 @@ package com.example.meals.activites
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.example.meals.R
 import com.example.meals.db.MealDatabase
+import com.example.meals.fragments.HomeFragment
+import com.example.meals.network.NetworkConnectivityCheck
 import com.example.meals.pojo.Meal
 import com.example.meals.retrofit.MealApi
 import com.example.meals.retrofit.RetrofitInstance
+import com.example.meals.utils.InternetConnectivity
 import com.example.meals.viewmodel.HomeViewModel
 import com.example.meals.viewmodel.HomeViewModelFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -26,7 +31,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 //        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-
 
 
         val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottom_nav)
